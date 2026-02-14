@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <title>For Smriti Mini Jain Ji 💖</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+
+      :root {
+        --primary-color: #ff85a2;
+        --bg-gradient-1: #ffe6ea;
+        --bg-gradient-2: #fad0c4;
+        --text-color: #d81b60;
+        --card-bg: rgba(255, 255, 255, 0.95);
+      }
+
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        font-family: 'Quicksand', sans-serif;
+        background: linear-gradient(
+          135deg,
+          var(--bg-gradient-1) 0%,
+          var(--bg-gradient-2) 100%
+        );
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        flex-direction: column;
+      }
+
+      /* Floating Hearts */
+      .hearts-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .heart {
+        position: absolute;
+        bottom: -10vh;
+        animation: floatUp 5s linear infinite;
+        font-size: 1.5rem;
+        color: rgba(255, 133, 162, 0.6);
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-110vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      /* Main Card */
+      .card {
+        background: var(--card-bg);
+        padding: 2.5rem 2rem;
+        border-radius: 24px;
+        box-shadow: 0 15px 35px rgba(216, 27, 96, 0.15);
+        text-align: center;
+        max-width: 400px;
+        width: 85%;
+        z-index: 10;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .gif-container img {
+        width: 200px;
+        height: 200px;
+        object-fit: contain;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        pointer-events: none;
+      }
+
+      h1 {
+        color: var(--text-color);
+        font-size: 1.6rem;
+        margin-bottom: 2rem;
+        line-height: 1.4;
+      }
+
+      /* Buttons */
+      .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        position: relative;
+        min-height: 50px;
+      }
+
+      button {
+        font-family: 'Quicksand', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        padding: 12px 28px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      #btn-yes {
+        background-color: var(--primary-color);
+        color: white;
+        z-index: 2;
+      }
+
+      #btn-yes:hover {
+        background-color: #ff6b8b;
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(255, 107, 139, 0.4);
+      }
+
+      #btn-no {
+        background-color: #f1f2f6;
+        color: #57606f;
+        position: relative;
+        z-index: 3;
+      }
+
+      .final-message {
+        display: none;
+        font-size: 1.3rem;
+        color: var(--text-color);
+        line-height: 1.8;
+        font-weight: 600;
+      }
+
+      .footer {
+        position: absolute;
+        bottom: 15px;
+        font-size: 0.85rem;
+        color: #d81b60;
+        z-index: 10;
+        opacity: 0.8;
+      }
+
+      #confetti {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 5;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <audio
+      id="bg-music"
+      loop>
+      <source
+        src="https://www.bensound.com/bensound-music/bensound-love.mp3"
+        type="audio/mpeg" />
+    </audio>
+
+    <div
+      class="hearts-container"
+      id="hearts-container"></div>
+    <canvas id="confetti"></canvas>
+
+    <div
+      class="card"
+      id="main-card">
+      <div class="gif-container">
+        <img
+          id="character-gif"
+          src="https://media.tenor.com/ef30-bQp8RkAAAAC/bubu-dudu.gif"
+          alt="Cute Character" />
+      </div>
+
+      <h1 id="question-text">
+        Smriti "Mini" Jain Ji 💖<br /><br />Will you be my Valentine? 💘
+      </h1>
+
+      <div
+        class="btn-container"
+        id="btn-container">
+        <button id="btn-yes">Yes 💕</button>
+        <button id="btn-no">No 😢</button>
+      </div>
+
+      <div
+        class="final-message"
+        id="final-message">
+        Thank you for saying YES, Mini 🌹 <br />
+        You make my heart feel at home 💖 <br />
+        Every smile of yours means the world to me ✨ <br /><br />
+        <strong>Happy Valentine’s Day ❤️</strong>
+      </div>
+    </div>
+
+    <div class="footer">Made with infinite ❤️ just for you, Smriti</div>
+
+    <script>
+      // --- FIXED RAW GIF URLs ---
+      // Changed "AAAAj" to "AAAAC" to force strict GIF output and prevent broken image errors.
+      const flowSteps = [
+        {
+          text: 'Smriti "Mini" Jain Ji 💖<br><br>Will you be my Valentine? 💘',
+          gif: 'https://media.tenor.com/ef30-bQp8RkAAAAC/bubu-dudu.gif', // Dudu Bubu Asking
+        },
+        {
+          text: 'Are you sure? 🥺💗',
+          gif: 'https://media.tenor.com/o3b8Xp5M4CgAAAAC/bubu-dudu-bubu.gif', // Pleading
+        },
+        {
+          text: 'Like… really really sure? 😳❤️',
+          gif: 'https://media.tenor.com/Z5-4B9yE-84AAAAC/peach-goma.gif', // Peach Goma Hug
+        },
+        {
+          text: 'Pink promise? 🌸🤞',
+          gif: 'https://media.tenor.com/LvwKwH2Mps4AAAAC/quby-cute.gif', // Quby Cute
+        },
+        {
+          text: 'Forever type sure? 💍✨',
+          gif: 'https://media.tenor.com/K12X8mGk4q4AAAAC/milk-and-mocha-bear-hearts.gif', // Milk Mocha Bears
+        },
+      ];
+
+      const finalGif =
+        'https://media.tenor.com/YwNtbKkS548AAAAC/bubu-dudu-kiss.gif'; // Happy Final Kiss
+
+      let currentStep = 0;
+
+      const btnYes = document.getElementById('btn-yes');
+      const btnNo = document.getElementById('btn-no');
+      const questionText = document.getElementById('question-text');
+      const characterGif = document.getElementById('character-gif');
+      const finalMessage = document.getElementById('final-message');
+      const btnContainer = document.getElementById('btn-container');
+      const bgMusic = document.getElementById('bg-music');
+      const canvas = document.getElementById('confetti');
+      const mainCard = document.getElementById('main-card');
+
+      // Fallback in case a GIF ever goes down
+      characterGif.onerror = function () {
+        this.src = 'https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif';
+      };
+
+      // --- "NO" BUTTON DODGE LOGIC ---
+      const moveNoButton = () => {
+        const x = Math.random() * (window.innerWidth - btnNo.offsetWidth - 40);
+        const y =
+          Math.random() * (window.innerHeight - btnNo.offsetHeight - 40);
+
+        btnNo.style.position = 'fixed';
+        btnNo.style.left = `${Math.max(20, x)}px`;
+        btnNo.style.top = `${Math.max(20, y)}px`;
+
+        // "Yes" button grows bigger each time "No" is hovered
+        let currentScale =
+          parseFloat(
+            btnYes.style.transform.replace('scale(', '').replace(')', '')
+          ) || 1;
+        btnYes.style.transform = `scale(${currentScale + 0.15})`;
+      };
+
+      btnNo.addEventListener('mouseover', moveNoButton);
+      btnNo.addEventListener('touchstart', moveNoButton);
+
+      // --- "YES" BUTTON CLICK LOGIC ---
+      btnYes.addEventListener('click', () => {
+        if (currentStep === 0) {
+          bgMusic.volume = 0.5;
+          bgMusic
+            .play()
+            .catch((e) => console.log('Audio prevented by browser'));
+        }
+
+        currentStep++;
+        mainCard.style.opacity = '0'; // Fade out
+
+        setTimeout(() => {
+          if (currentStep < flowSteps.length) {
+            questionText.innerHTML = flowSteps[currentStep].text;
+            characterGif.src = flowSteps[currentStep].gif;
+
+            // Reset "No" button
+            btnNo.style.position = 'relative';
+            btnNo.style.left = 'auto';
+            btnNo.style.top = 'auto';
+          } else {
+            // Final Success Screen
+            questionText.style.display = 'none';
+            btnContainer.style.display = 'none';
+            finalMessage.style.display = 'block';
+            characterGif.src = finalGif;
+            startConfetti();
+          }
+          mainCard.style.opacity = '1'; // Fade in
+        }, 400);
+      });
+
+      // --- BACKGROUND HEARTS ---
+      const createHeart = () => {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = ['❤️', '💖', '💘', '🌸', '✨'][
+          Math.floor(Math.random() * 5)
+        ];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+        document.getElementById('hearts-container').appendChild(heart);
+        setTimeout(() => {
+          heart.remove();
+        }, 7000);
+      };
+      setInterval(createHeart, 400);
+
+      // --- FINAL CONFETTI ---
+      function startConfetti() {
+        canvas.style.display = 'block';
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const colors = ['#ff85a2', '#d81b60', '#ffb3c6', '#ffffff'];
+
+        for (let i = 0; i < 100; i++) {
+          particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            size: Math.random() * 8 + 4,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            speedY: Math.random() * 3 + 2,
+            speedX: Math.random() * 2 - 1,
+          });
+        }
+
+        function animate() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          particles.forEach((p) => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = p.color;
+            ctx.fill();
+            p.y += p.speedY;
+            p.x += p.speedX;
+            if (p.y > canvas.height) p.y = 0;
+          });
+          requestAnimationFrame(animate);
+        }
+        animate();
+      }
+    </script>
+  </body>
+</html>
